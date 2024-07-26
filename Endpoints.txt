@@ -1,0 +1,21 @@
+Login************************( post )
+
+http://localhost:3000/api/user/login
+
+ {
+  "email": "ramyastella08@gmail.com",
+  "password": "ramya@081"
+ }
+
+
+ Register************************( post )
+
+http://localhost:3000/api/user/register
+
+ {
+  "name": "Ramya Stella",
+  "image": "https://cdn.lazyshop.com/files/84d84f33-5cbd-4cd2-8c63-4a3789e49cfc/other/c43a1cdf40b737076994e29f4e5178a9.jpg",
+  "email": "ramyastella08@gmail.com",
+  "mobile": "8667820453",
+  "password": "ramya@081"
+ }
