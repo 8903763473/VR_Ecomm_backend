@@ -1,6 +1,6 @@
 Login************************( post )
 
-http://localhost:3000/api/user/login
+http://localhost:8000/api/user/login
 
  {
   "email": "ramyastella08@gmail.com",
@@ -8,9 +8,9 @@ http://localhost:3000/api/user/login
  }
 
 
- Register************************( post )
+Register************************( post )
 
-http://localhost:3000/api/user/register
+http://localhost:8000/api/user/register
 
  {
   "name": "Ramya Stella",
@@ -19,3 +19,8 @@ http://localhost:3000/api/user/register
   "mobile": "8667820453",
   "password": "ramya@081"
  }
+
+
+Get all Category************************( get )
+
+http://localhost:8000/api/category/getAllCategories
