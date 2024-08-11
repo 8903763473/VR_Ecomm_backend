@@ -2,28 +2,30 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+// const puppeteer = require('puppeteer');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json({ limit: '10mb' })); // Parse JSON bodies
-app.use(cors({
-    origin: 'http://localhost:8100'
-}));
+app.use(cors());
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected')) 
+}).then(() => console.log('MongoDB connected'))
     .catch(err => console.error('Failed to connect to MongoDB', err));
 
 // Routes
 const userRoutes = require('./routes/userRouter');
 const categoryRoutes = require('./routes/categoryRouter');
+const productRoutes = require('./routes/productRouter');
+
 app.use('/api/user', userRoutes);
 app.use('/api/category', categoryRoutes);
+app.use('/api/product', productRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
