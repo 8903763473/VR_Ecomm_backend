@@ -64,6 +64,15 @@ class ProductService {
             throw new Error(`Error deleting product: ${error.message}`);
         }
     }
+
+    async getProductsByCategory(category) {
+        try {
+            return await Product.find({ productCategory: category });
+        } catch (error) {
+            throw new Error(`Error fetching products by category: ${error.message}`);
+        }
+    }
+
 }
 
 module.exports = new ProductService();
