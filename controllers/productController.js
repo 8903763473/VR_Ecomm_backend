@@ -54,7 +54,7 @@ class ProductController {
             res.status(500).json({ message: error.message });
         }
     }
-    
+
     async getProductsByCategory(req, res) {
         try {
             const products = await productService.getProductsByCategory(req.params.category);
@@ -66,6 +66,64 @@ class ProductController {
             res.status(500).json({ message: error.message });
         }
     }
+
+
+
+    async getHighOfferProducts(req, res) {
+        try {
+            const products = await productService.getHighOfferProducts();
+            res.status(200).json(products);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async getNewProducts(req, res) {
+        try {
+            const products = await productService.getNewProducts();
+            res.status(200).json(products);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async getBestProducts(req, res) {
+        try {
+            const products = await productService.getBestProducts();
+            res.status(200).json(products);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async getLatestProducts(req, res) {
+        try {
+            const products = await productService.getLatestProducts();
+            res.status(200).json(products);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async getSpecialProducts(req, res) {
+        try {
+            const products = await productService.getSpecialProducts();
+            res.status(200).json(products);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    // async getBestSellerProducts(req, res) {
+    //     try {
+    //         const products = await productService.getBestSellerProducts();
+    //         res.status(200).json(products);
+    //     } catch (error) {
+    //         res.status(500).json({ message: error.message });
+    //     }
+    // }
+
+
 }
 
 
