@@ -22,10 +22,12 @@ mongoose.connect(process.env.MONGO_URI, {
 const userRoutes = require('./routes/userRouter');
 const categoryRoutes = require('./routes/categoryRouter');
 const productRoutes = require('./routes/productRouter');
+const cartRoutes = require('./routes/cartRouters');
 
 app.use('/api/user', userRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
