@@ -1,5 +1,6 @@
 // controllers/cartController.js
 const CartService = require('../services/cartService');
+// const io = require('../socket');
 
 exports.getCart = async (req, res) => {
     try {
@@ -23,6 +24,7 @@ exports.addToCart = async (req, res) => {
         const userId = req.body.userId; // Assuming you have user info in req.user
         const { productId, quantity } = req.body;
         const updatedCart = await CartService.addToCart(userId, productId, quantity);
+        // io.to(userId).emit('cartData', updatedCart);
         res.json(updatedCart);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -34,6 +36,7 @@ exports.removeFromCart = async (req, res) => {
         const userId = req.body.userId; // Assuming you have user info in req.user
         const { productId } = req.params;
         const updatedCart = await CartService.removeFromCart(userId, productId);
+        // io.to(userId).emit('cartData', updatedCart);
         res.json(updatedCart);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -47,6 +50,7 @@ exports.clearCart = async (req, res) => {
             return res.status(400).json({ message: 'User ID is required' });
         }
         await CartService.clearCart(userId);
+        // io.to(userId).emit('cartData', []);
         res.json({ message: 'Cart cleared' });
     } catch (error) {
         res.status(500).json({ message: error.message });
