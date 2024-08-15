@@ -1,22 +1,18 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const connectDB = require('./database');
+const CartService = require('./services/cartService');
+const socketIo = require('socket.io');
+const http = require('http');
 require('dotenv').config();
-// const puppeteer = require('puppeteer');
-
 const app = express();
-const port = process.env.PORT || 3000;
+
+// Connect to database
+connectDB();
 
 // Middleware
-app.use(express.json({ limit: '10mb' })); // Parse JSON bodies
 app.use(cors());
-
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('Failed to connect to MongoDB', err));
+app.use(express.json({ limit: '50mb' }));
 
 // Routes
 const userRoutes = require('./routes/userRouter');
@@ -29,12 +25,61 @@ app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/cart', cartRoutes);
 
-// Error handling middleware
+// SOCKET------------------------------------------------------------
+const server = http.createServer(app);
+const io = socketIo(server, {
+    cors: {
+        origin: 'http://localhost:8100',
+        methods: ['GET', 'POST'],
+    },
+    transports: ['websocket', 'polling']
+});
+
+console.log('SOCKET server is running');
+io.on('connection', (socket) => {
+    console.log('New client connected', socket.id);
+
+    socket.on('joinRoom', (userId) => {
+        socket.join(userId);
+        console.log(`User ${socket.id} joined room ${userId}`);
+    });
+
+    let userId = null;
+
+    socket.on('getCart', async (id) => {
+        userId = id;
+        try {
+            const cart = await CartService.getCart(userId);
+            socket.emit('cartData', cart);
+        } catch (error) {
+            socket.emit('error', { message: error.message });
+        }
+    });
+
+    const intervalId = setInterval(async () => {
+        if (userId) {
+            try {
+                const cart = await CartService.getCart(userId);
+                socket.emit('cartData', cart);
+            } catch (error) {
+                socket.emit('error', { message: error.message });
+            }
+        }
+    }, 1000);
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+        clearInterval(intervalId);
+    });
+});
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something went wrong!');
 });
 
-app.listen(port, () => {
+const port = 8000;
+
+server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
