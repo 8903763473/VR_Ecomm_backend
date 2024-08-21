@@ -4,7 +4,7 @@ const CartService = require('../services/cartService');
 
 exports.getCart = async (req, res) => {
     try {
-        const userId = req.query.userId; // Use req.query for GET request parameters
+        const userId = req.body.userId; // Use req.query for GET request parameters
         if (!userId) {
             return res.status(400).json({ message: 'User ID is required' });
         }

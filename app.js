@@ -19,11 +19,17 @@ const userRoutes = require('./routes/userRouter');
 const categoryRoutes = require('./routes/categoryRouter');
 const productRoutes = require('./routes/productRouter');
 const cartRoutes = require('./routes/cartRouters');
+const paymentRoutes = require('./routes/paymentRouters');
+const checkoutRoutes = require('./routes/checkoutRouters');
+const contactRoutes = require('./routes/contactRouters');
 
 app.use('/api/user', userRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/payment', paymentRoutes);
+app.use('/api/checkout', checkoutRoutes);
+app.use('/api/contact', contactRoutes);
 
 // SOCKET------------------------------------------------------------
 const server = http.createServer(app);

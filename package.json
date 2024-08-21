@@ -20,6 +20,7 @@
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1",
+    "razorpay": "^2.9.4",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5"
   },
