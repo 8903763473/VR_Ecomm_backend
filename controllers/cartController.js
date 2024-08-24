@@ -5,6 +5,7 @@ const CartService = require('../services/cartService');
 exports.getCart = async (req, res) => {
     try {
         const userId = req.body.userId; // Use req.query for GET request parameters
+        console.log(userId);
         if (!userId) {
             return res.status(400).json({ message: 'User ID is required' });
         }
@@ -33,10 +34,9 @@ exports.addToCart = async (req, res) => {
 
 exports.removeFromCart = async (req, res) => {
     try {
-        const userId = req.body.userId; // Assuming you have user info in req.user
+        const userId = req.query.userId; // Now getting userId from query
         const { productId } = req.params;
         const updatedCart = await CartService.removeFromCart(userId, productId);
-        // io.to(userId).emit('cartData', updatedCart);
         res.json(updatedCart);
     } catch (error) {
         res.status(500).json({ message: error.message });
