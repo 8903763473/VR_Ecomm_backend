@@ -2,8 +2,8 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
 const razorpay = new Razorpay({
-    key_id: 'rzp_test_AvyR3nh6tIT3ve',
-    key_secret: 'KgLWwPOQyfealYV0lYFKMYEA'
+    key_id: 'rzp_test_1jw9Kwv1z90KNu',
+    key_secret: 'hexdopK1D6yWdBstmxGc41jB'
 });
 
 class PaymentService {

@@ -45,7 +45,7 @@ exports.removeFromCart = async (req, res) => {
 
 exports.clearCart = async (req, res) => {
     try {
-        const userId = req.params.userId; // Access userId from req.params
+        const userId = req.body.userId; // Access userId from req.params
         if (!userId) {
             return res.status(400).json({ message: 'User ID is required' });
         }
