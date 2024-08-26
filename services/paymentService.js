@@ -2,8 +2,8 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
 const razorpay = new Razorpay({
-    key_id: 'rzp_test_1jw9Kwv1z90KNu',
-    key_secret: 'hexdopK1D6yWdBstmxGc41jB'
+    key_id: 'rzp_test_kpCe8bslVbEfVQ',
+    key_secret: 'rGy3RGtymWaeLoVi10Qem13b'
 });
 
 class PaymentService {
@@ -19,7 +19,7 @@ class PaymentService {
             const order = await razorpay.orders.create(options);
             return order;
         } catch (error) {
-            throw new Error(error.message);
+            throw new Error(error);
         }
     }
 

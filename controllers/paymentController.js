@@ -9,7 +9,7 @@ class PaymentController {
             const order = await paymentService.createOrder(amount, currency);
             res.json(order);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: error });
         }
     }
 
