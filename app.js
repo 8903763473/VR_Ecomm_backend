@@ -43,10 +43,8 @@ const io = socketIo(server, {
     transports: ['websocket', 'polling']
 });
 
-console.log('SOCKET server is running');
 io.on('connection', (socket) => {
     console.log('New client connected', socket.id);
-
     socket.on('joinRoom', (userId) => {
         socket.join(userId);
         console.log(`User ${socket.id} joined room ${userId}`);
@@ -54,7 +52,7 @@ io.on('connection', (socket) => {
 
     let userId = null;
 
-    socket.on('getCart', async (id) => {
+    socket.on('getCart', async (id) => {        
         userId = id;
         try {
             const cart = await CartService.getCart(userId);

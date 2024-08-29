@@ -10,7 +10,7 @@ class PaymentService {
 
     async createOrder(amount, currency) {
         const options = {
-            amount: amount * 100,  // amount in the smallest currency unit (e.g., paise for INR)
+            amount: amount * 100,  
             currency,
             receipt: 'order_rcptid_11'
         };
