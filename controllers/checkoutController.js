@@ -10,9 +10,29 @@ class CheckoutController {
         }
     }
 
-    async getmyOrders(req, res) {
+    async getAllCheckouts(req, res) {
         try {
-            const checkout = await checkoutService.getmyOrdersById(req.params.id);
+            const checkouts = await checkoutService.getAllCheckouts();
+            res.status(200).json(checkouts);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async getCheckoutsByUserId(req, res) {
+        try {
+            console.log(req.params.userId);
+            const checkouts = await checkoutService.getCheckoutsByUserId(req.params.userId);
+            res.status(200).json(checkouts);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async getCheckoutById(req, res) {
+        try {
+            console.log(req.params.checkoutId);
+            const checkout = await checkoutService.getCheckoutById(req.params.checkoutId);
             res.status(200).json(checkout);
         } catch (error) {
             res.status(500).json({ error: error.message });

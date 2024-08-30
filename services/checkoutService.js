@@ -11,7 +11,25 @@ class CheckoutService {
         }
     }
 
-    async getmyOrdersById(checkoutId) {
+    async getAllCheckouts() {
+        try {
+            const checkouts = await Checkout.find().populate('products.productId');
+            return checkouts;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async getCheckoutsByUserId(userId) {
+        try {
+            const checkouts = await Checkout.find({ userId }).populate('products.productId');
+            return checkouts;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async getCheckoutById(checkoutId) {
         try {
             const checkout = await Checkout.findById(checkoutId).populate('products.productId');
             return checkout;
