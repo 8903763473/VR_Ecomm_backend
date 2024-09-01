@@ -3,8 +3,17 @@ const checkoutService = require('../services/checkoutService');
 class CheckoutController {
     async createCheckout(req, res) {
         try {
+            // Create the checkout
             const checkout = await checkoutService.createCheckout(req.body);
-            res.status(201).json(checkout);
+
+            // Send the email
+            const emailResponse = await checkoutService.orderPlacedService(req.body.email);
+
+            // Respond with the checkout data and email response
+            res.status(201).json({
+                checkout,
+                emailResponse
+            });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -36,6 +45,19 @@ class CheckoutController {
             res.status(200).json(checkout);
         } catch (error) {
             res.status(500).json({ error: error.message });
+        }
+    }
+
+    async orderPlacedIntimation(req, res) {
+        try {
+            const { email } = req.body;
+            const emailResponse = await emailService.orderPlacedService(email);
+            res.status(200).json(emailResponse);
+        } catch (error) {
+            res.status(500).json({
+                message: 'Failed to send invitation email',
+                error: error.message
+            });
         }
     }
 }

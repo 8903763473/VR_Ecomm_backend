@@ -45,37 +45,33 @@ const io = socketIo(server, {
 
 io.on('connection', (socket) => {
     console.log('New client connected', socket.id);
+
     socket.on('joinRoom', (userId) => {
         socket.join(userId);
         console.log(`User ${socket.id} joined room ${userId}`);
     });
 
-    let userId = null;
-
-    socket.on('getCart', async (id) => {        
-        userId = id;
+    socket.on('getCart', async (userId) => {
         try {
             const cart = await CartService.getCart(userId);
             socket.emit('cartData', cart);
+
+            // Optionally listen to cart changes in the database (using a watcher or similar)
+            const changeStream = CartService.watchCartChanges(userId); // Hypothetical watcher
+            changeStream.on('change', async () => {
+                const updatedCart = await CartService.getCart(userId);
+                socket.emit('cartData', updatedCart);
+            });
+
+            // Clean up the watcher when the socket disconnects
+            socket.on('disconnect', () => {
+                console.log('Client disconnected');
+                if (changeStream) changeStream.close();
+            });
+
         } catch (error) {
             socket.emit('error', { message: error.message });
         }
-    });
-
-    const intervalId = setInterval(async () => {
-        if (userId) {
-            try {
-                const cart = await CartService.getCart(userId);
-                socket.emit('cartData', cart);
-            } catch (error) {
-                socket.emit('error', { message: error.message });
-            }
-        }
-    }, 1000);
-
-    socket.on('disconnect', () => {
-        console.log('Client disconnected');
-        clearInterval(intervalId);
     });
 });
 
