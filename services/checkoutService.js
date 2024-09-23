@@ -74,9 +74,9 @@ class CheckoutService {
                 subject: 'Order Placed Successfully !', // Subject line
                 html: `
                  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <div style="text-align: center;">
-            <img src="cid:logo" alt="Logo" style="width: 120px; height: auto; margin-bottom: 20px;"/>
-        </div>
+        // <div style="text-align: center;">
+        //     <img src="cid:logo" alt="Logo" style="width: 120px; height: auto; margin-bottom: 20px;"/>
+        // </div>
         <h1 style="color: #333; text-align: center; margin-bottom: 20px;">Order Confirmation</h1>
         <p style="font-size: 16px; color: #555; text-align: center; margin-bottom: 20px;">Your order has been placed successfully. Thank you for shopping with us!</p>
         <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
@@ -86,13 +86,6 @@ class CheckoutService {
         </div>
     </div>
             `,
-                attachments: [
-                    {
-                        filename: 'logo.png',
-                        path: path.join(__dirname, '../vr.jpg'),
-                        cid: 'logo'
-                    }
-                ]
             };
 
             transporter.sendMail(mailOptions, (error, info) => {
